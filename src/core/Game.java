@@ -1,54 +1,63 @@
+package core;
+
+import core.render.IRender;
+import core.render.RenderCPU;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
-public class Game implements Runnable {
-    private static final String TITLE = "Life";
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 400;
+public final class Game extends Collection implements Runnable {
+    private static IRender render;
+
+    public static void setRender(IRender render) {
+        if (Game.render == null) Game.render = render;
+    }
+
+    public static IRender getRender() {
+        if (render == null) throw new NullPointerException("render must be initialized");
+
+        return render;
+    }
+
+    private final String title;
+    private final int width;
+    private final int height;
 
     private final Canvas area = new Canvas();
 
     private boolean running = false;
 
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.init();
+    public Game(int width, int height, String title, Color backgroundColor) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
 
-        game.area.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setRender(new RenderCPU(area, backgroundColor));
+    }
 
-        JFrame shell = new JFrame(TITLE);
+    public void start() {
+        init();
+        Game.getRender().init();
+
+        area.setPreferredSize(new Dimension(width, height));
+
+        final JFrame shell = new JFrame(title);
         shell.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         shell.setLayout(new BorderLayout());
-        shell.add(game.area, BorderLayout.CENTER);
+        shell.add(area, BorderLayout.CENTER);
         shell.pack();
         shell.setResizable(false);
         shell.setLocationRelativeTo(null);
         shell.setVisible(true);
 
-        // Начало цикла игры
-        game.start();
-
-    }
-
-    public void start() {
         running = true;
         new Thread(this).start();
     }
 
     public void stop() {
         running = false;
-    }
-
-    public void init() {
-
-    }
-
-    public void update(float dt) {
-
-    }
-
-    public void render() {
-
+        end();
     }
 
 
