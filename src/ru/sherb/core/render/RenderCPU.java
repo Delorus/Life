@@ -34,10 +34,10 @@ public class RenderCPU implements IRender {
             final Graphics graphics = canvas.getGraphics();
             graphics.setColor(visualObject.getColor());
             graphics.fillRect(
-                    (int) (visualObject.getPosition().x * (visualObject.getSize().x * visualObject.getScale().x)),
                     (int) (visualObject.getPosition().y * (visualObject.getSize().y * visualObject.getScale().y)),
-                    (int) (visualObject.getSize().x * (visualObject.getScale().x)),
-                    (int) (visualObject.getSize().y * (visualObject.getScale().y))
+                    (int) (visualObject.getPosition().x * (visualObject.getSize().x * visualObject.getScale().x)),
+                    (int) (visualObject.getSize().y * (visualObject.getScale().y)),
+                    (int) (visualObject.getSize().x * (visualObject.getScale().x))
             );
             graphics.dispose();
         });

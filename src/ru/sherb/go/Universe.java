@@ -41,9 +41,8 @@ public class Universe extends Collection<Cell> {
         final int x = (int) cell.getPosition().x;
         final int y = (int) cell.getPosition().y;
 
-        for (int i = x - 1; i <= x + 1; i++) {
-            for (int j = y - 1; j <= y + 1; j++) {
-                if (i < 0 || i > size || j < 0 || j > size) continue;
+        for (int i = torusMotion(x - 1); i != torusMotion(x + 2); i = torusMotion(++i)) {
+            for (int j = torusMotion(y - 1); j != torusMotion(y + 2); j = torusMotion(++j)) {
 
                 final Cell buf = new Cell(
                         new Point2D.Float(i, j),
@@ -65,6 +64,10 @@ public class Universe extends Collection<Cell> {
         }
 
         return aura;
+    }
+
+    protected int torusMotion(int expectedPos) {
+        return (((expectedPos % size) + size) % size);
     }
 
     /**
@@ -92,9 +95,8 @@ public class Universe extends Collection<Cell> {
         final int x = (int) removedCell.getPosition().x;
         final int y = (int) removedCell.getPosition().y;
 
-        for (int i = x - 1; i <= x + 1; i++) {
-            for (int j = y - 1; j <= y + 1; j++) {
-                if (i < 0 || i > size || j < 0 || j > size) continue;
+        for (int i = torusMotion(x - 1); i != torusMotion(x + 2); i = torusMotion(++i)) {
+            for (int j = torusMotion(y - 1); j != torusMotion(y + 2); j = torusMotion(++j)) {
 
                 final Cell buf = getCell(i, j);
 
