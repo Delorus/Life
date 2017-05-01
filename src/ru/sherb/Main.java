@@ -18,7 +18,7 @@ public final class Main {
     public static void main(String[] args) {
         final Game game = new Game(400, 400, "Life", BACKGROUND_COLOR);
 
-        final Collection universe = new Universe(UNIVERSE_SIZE, CELL_SIZE, BACKGROUND_COLOR, FOREGROUND_COLOR);
+        final Universe universe = new Universe(UNIVERSE_SIZE, CELL_SIZE, BACKGROUND_COLOR, FOREGROUND_COLOR);
         game.addCollection(universe);
 //        final Random rnd = new Random();
 
@@ -32,9 +32,14 @@ public final class Main {
 //            }
 //        }
 
-        ArrayList<Cell> cells = new ArrayList<>();
-        cells.add(new Cell(new Point2D.Float(2, 4), new Point2D.Float(CELL_SIZE, CELL_SIZE), FOREGROUND_COLOR, BACKGROUND_COLOR));
-        cells.get(0).setLive(true);
+        //create planer
+        universe.addCell(new Point2D.Float(2, 0), true);
+        universe.addCell(new Point2D.Float(2, 1), true);
+        universe.addCell(new Point2D.Float(2, 2), true);
+        universe.addCell(new Point2D.Float(1, 2), true);
+        universe.addCell(new Point2D.Float(0, 1), true);
+
+
         game.start();
     }
 }

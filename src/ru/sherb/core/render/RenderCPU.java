@@ -1,8 +1,12 @@
 package ru.sherb.core.render;
 
+import ru.sherb.Main;
+import ru.sherb.core.Collection;
 import ru.sherb.core.VisualObject;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
+import java.util.Arrays;
 
 public class RenderCPU implements IRender {
     /**
@@ -18,11 +22,24 @@ public class RenderCPU implements IRender {
 
     @Override
     public void init() {
-        //TODO заглушка
+        canvas.setBackground(backgroundColor);
+        canvas.paint(canvas.getGraphics());
+
     }
 
     @Override
-    public void paint(VisualObject... visualObjects) {
-        //TODO заглушка
+    public void paint(Collection parent, VisualObject... visualObjects) {
+
+        Arrays.stream(visualObjects).forEach(visualObject -> {
+            final Graphics graphics = canvas.getGraphics();
+            graphics.setColor(visualObject.getColor());
+            graphics.fillRect(
+                    (int) (visualObject.getPosition().x * (visualObject.getSize().x * visualObject.getScale().x)),
+                    (int) (visualObject.getPosition().y * (visualObject.getSize().y * visualObject.getScale().y)),
+                    (int) (visualObject.getSize().x * (visualObject.getScale().x)),
+                    (int) (visualObject.getSize().y * (visualObject.getScale().y))
+            );
+            graphics.dispose();
+        });
     }
 }

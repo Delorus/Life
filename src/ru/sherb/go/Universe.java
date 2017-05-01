@@ -5,6 +5,7 @@ import ru.sherb.core.Collection;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Universe extends Collection<Cell> {
@@ -13,11 +14,19 @@ public class Universe extends Collection<Cell> {
     private final Color color;
     private final Color cellColor;
 
+    private Point2D.Float cellScale;
+
     public Universe(int universeSize, int cellSize, Color universeColor, Color cellColor) {
         this.size = universeSize;
         this.cellSize = cellSize;
         this.color = universeColor;
         this.cellColor = cellColor;
+    }
+
+    public void setCellScale(Point2D.Float scale) {
+        this.cellScale = scale;
+
+        getVisualObjects().forEach(cell -> cell.setScale(cellScale));
     }
 
     /**
@@ -40,8 +49,12 @@ public class Universe extends Collection<Cell> {
                         new Point2D.Float(i, j),
                         new Point2D.Float(cellSize, cellSize),
                         cellColor,
+//                        Color.RED
                         color
                 );
+                if (cellScale != null) {
+                    buf.setScale(cellScale);
+                }
 
                 if (cell.equals(buf)) continue;
 
@@ -151,9 +164,13 @@ public class Universe extends Collection<Cell> {
                 pos,
                 new Point2D.Float(cellSize, cellSize),
                 cellColor,
+//                Color.RED
                 color
         );
         cell.setLive(live);
+        if (cellScale != null) {
+            cell.setScale(cellScale);
+        }
 
         if (getVisualObjects().contains(cell)) {
             getCell(pos).setLive(live);
@@ -186,6 +203,15 @@ public class Universe extends Collection<Cell> {
 
     @Override
     public void update(float dt) {
+//        getVisualObjects()
+//                .stream()
+//                .filter(Cell::isLive)
+//                .forEach(System.out::println);
+//
+//        final char[] split = new char[100];
+//        Arrays.fill(split,  '-');
+//        System.out.println(new String(split));
+
         super.update(dt);
 
         nextGeneration();

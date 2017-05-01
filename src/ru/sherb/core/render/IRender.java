@@ -1,5 +1,6 @@
 package ru.sherb.core.render;
 
+import ru.sherb.core.Collection;
 import ru.sherb.core.VisualObject;
 
 public interface IRender {
@@ -13,5 +14,5 @@ public interface IRender {
      * Рисует на графическом контексте все визуальные компоненты
      * @param visualObjects все визуальные компоненты, которые нужно отрисовать
      */
-    void paint(VisualObject... visualObjects);
+    void paint(Collection parent, VisualObject... visualObjects);
 }

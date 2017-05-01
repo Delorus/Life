@@ -42,7 +42,6 @@ public final class Game extends Collection implements Runnable {
 
     public void start() {
         init();
-        Game.getRender().init();
 
         area.setPreferredSize(new Dimension(width, height));
 
@@ -54,6 +53,8 @@ public final class Game extends Collection implements Runnable {
         shell.setResizable(false);
         shell.setLocationRelativeTo(null);
         shell.setVisible(true);
+
+        Game.getRender().init();
 
         running = true;
         new Thread(this).start();
@@ -67,6 +68,8 @@ public final class Game extends Collection implements Runnable {
 
     @Override
     public void run() {
+        render();
+
         final float SECONDS_PER_UPDATE = 1 / 30.f; // Фиксированная частота обновления графической и логической части
         float lag = 0.f;
         float frameTime = 0.f;

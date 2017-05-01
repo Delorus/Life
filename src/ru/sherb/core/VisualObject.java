@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public abstract class VisualObject extends GameObject {
-    private static final Point2D.Float DEFAULT_SIZE = new Point2D.Float(1, 1);
+//    public static final Point2D.Float DEFAULT_SIZE = new Point2D.Float(1, 1);
 
     /**
      * Размер в двумерном измерении x - ширина, y - высота
@@ -14,7 +14,7 @@ public abstract class VisualObject extends GameObject {
     /**
      * Модификатор на который изменяется размер двумерного игрового объекта
      */
-    private Point2D.Float scale;
+    private Point2D.Float scale = new Point2D.Float(1, 1);
 
     private Point2D.Float position;
     private Color color;
@@ -62,4 +62,7 @@ public abstract class VisualObject extends GameObject {
         this.scale = scale;
     }
 
+    public Point2D.Float getSize() {
+        return size;
+    }
 }

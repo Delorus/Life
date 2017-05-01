@@ -76,4 +76,13 @@ public class Cell extends VisualObject {
         result = 31 * result + (int) getPosition().y;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "live=" + live +
+                ", countLivingCell=" + countLivingCell +
+                ", position=" + getPosition() +
+                '}';
+    }
 }
