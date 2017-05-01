@@ -1,6 +1,6 @@
-package core.render;
+package ru.sherb.core.render;
 
-import core.VisualObject;
+import ru.sherb.core.VisualObject;
 
 public interface IRender {
 

@@ -1,4 +1,4 @@
-package core;
+package ru.sherb.core;
 
 public abstract class GameObject {
     private final int id;

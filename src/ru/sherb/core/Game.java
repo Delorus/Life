@@ -1,11 +1,10 @@
-package core;
+package ru.sherb.core;
 
-import core.render.IRender;
-import core.render.RenderCPU;
+import ru.sherb.core.render.IRender;
+import ru.sherb.core.render.RenderCPU;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public final class Game extends Collection implements Runnable {
     private static IRender render;
@@ -36,6 +35,11 @@ public final class Game extends Collection implements Runnable {
         setRender(new RenderCPU(area, backgroundColor));
     }
 
+    @Override
+    public boolean addCollection(Collection collection) {
+        return super.addCollection(collection);
+    }
+
     public void start() {
         init();
         Game.getRender().init();
@@ -43,7 +47,7 @@ public final class Game extends Collection implements Runnable {
         area.setPreferredSize(new Dimension(width, height));
 
         final JFrame shell = new JFrame(title);
-        shell.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        shell.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         shell.setLayout(new BorderLayout());
         shell.add(area, BorderLayout.CENTER);
         shell.pack();

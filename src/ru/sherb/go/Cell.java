@@ -1,12 +1,9 @@
-package go;
+package ru.sherb.go;
 
-import core.GameObject;
-import core.VisualObject;
+import ru.sherb.core.VisualObject;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Cell extends VisualObject {
     private final Color liveColor;
@@ -15,10 +12,11 @@ public class Cell extends VisualObject {
     private int countLivingCell;
 
 
-    public Cell(int id, Point2D.Float size, Color liveColor, Color deadColor) {
-        super(id, size);
+    public Cell(Point2D.Float pos, Point2D.Float size, Color liveColor, Color deadColor) {
+        super(size);
         this.liveColor = liveColor;
         this.deadColor = deadColor;
+        setPosition(pos);
     }
 
     public void setLive(boolean live) {
@@ -51,11 +49,31 @@ public class Cell extends VisualObject {
 
     @Override
     public void update(float dt) {
-
+        //passed
+        //TODO переместить сюда логику умирания и оживления клеток из метода Universe.nextGeneration
     }
 
     @Override
     public void end() {
 //        live = false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (super.equals(o)) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final Cell that = (Cell) o;
+
+        return that.getPosition().x == this.getPosition().x && that.getPosition().y == this.getPosition().y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (int) getPosition().x;
+        result = 31 * result + (int) getPosition().y;
+        return result;
     }
 }

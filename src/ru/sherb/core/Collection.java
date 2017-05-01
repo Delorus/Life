@@ -1,18 +1,19 @@
-package core;
+package ru.sherb.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
-public abstract class Collection extends GameObject {
-    private List<VisualObject> visualObjects;
+public abstract class Collection<E extends VisualObject> extends GameObject {
+    private List<E> visualObjects;
     private List<Collection> collections;
 
-    public void setVisualObjects(List<VisualObject> visualObjects) {
-        this.visualObjects = visualObjects;
+    protected void setVisualObjects(java.util.Collection<E> visualObjects) {
+        this.visualObjects = new ArrayList<E>(visualObjects);
     }
 
-    public boolean removeVisualObject(VisualObject visualObject) {
+    protected boolean removeVisualObject(E visualObject) {
         if (this.visualObjects.remove(visualObject)) {
             visualObject.end();
             return true;
@@ -20,27 +21,28 @@ public abstract class Collection extends GameObject {
         return false;
     }
 
-    public boolean addVisualObject(VisualObject visualObject) {
+    protected boolean addVisualObject(E visualObject) {
         if (visualObjects == null) {
             visualObjects = new ArrayList<>();
         }
 
-        if (! this.visualObjects.contains(visualObject)) {
+        if (!this.visualObjects.contains(visualObject)) {
             visualObject.init();
             return this.visualObjects.add(visualObject);
         }
+
         return false;
     }
 
-    protected List<VisualObject> getVisualObjects() {
-        return visualObjects;
+    protected List<E> getVisualObjects() {
+        return visualObjects == null ? Collections.EMPTY_LIST : visualObjects;
     }
 
-    public void setCollections(List<Collection> collections) {
+    protected void setCollections(List<Collection> collections) {
         this.collections = collections;
     }
 
-    public boolean removeCollection(Collection collection) {
+    protected boolean removeCollection(Collection collection) {
         if (this.collections.remove(collection)) {
             collection.end();
             return true;
@@ -48,12 +50,12 @@ public abstract class Collection extends GameObject {
         return false;
     }
 
-    public boolean addCollection(Collection collection) {
+    protected boolean addCollection(Collection collection) {
         if (collections == null) {
             collections = new ArrayList<>();
         }
 
-        if (! this.collections.contains(collection)) {
+        if (!this.collections.contains(collection)) {
             collection.init();
             return this.collections.add(collection);
         }
@@ -61,7 +63,7 @@ public abstract class Collection extends GameObject {
     }
 
     protected List<Collection> getCollections() {
-        return collections;
+        return collections == null ? Collections.emptyList() : collections;
     }
 
     @Override
@@ -123,5 +125,5 @@ public abstract class Collection extends GameObject {
                 }
             }
         }
-    };
+    }
 }
